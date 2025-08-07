@@ -31,7 +31,7 @@ if os.path.exists(study_path):
     '''若已经保存过调参结果，则直接加载；否则运行自动调参函数'''
     study = joblib.load(study_path)
 else:
-    study = run_optimization(train_features, train_labels, get_net, n_trials=200)
+    study = run_optimization(train_features, train_labels, get_net, n_trials=20)
     os.makedirs('saved_models', exist_ok=True)
     joblib.dump(study, study_path) # 保存调参记录
 

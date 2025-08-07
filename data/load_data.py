@@ -11,7 +11,7 @@ from scipy.stats import cauchy
 def detect_outliers(data):
     """使用柯西分布检测异常值"""
     params = cauchy.fit(data['SalePrice'])
-    threshold = params[0] + 3*params[1]
+    threshold = params[0] + 3*params[1]   # params[0]：位置参数，类似均值   params[1]：尺度参数，类似标准差
     return data[data['SalePrice'] > threshold].index
 
 
@@ -42,12 +42,12 @@ def load_and_preprocess(train_path, test_path):
     test_features[cat_features] = cat_imputer.transform(test_features[cat_features])
 
     # 特征工程（年建造周期）
-    for df in [train_features, test_features]:
-        df['YearSin'] = np.sin(2 * np.pi * df['YearBuilt'] / 100)
-        df['YearCos'] = np.cos(2 * np.pi * df['YearBuilt'] / 100)
+    # for df in [train_features, test_features]:
+    #     df['YearSin'] = np.sin(2 * np.pi * df['YearBuilt'] / 100)
+    #     df['YearCos'] = np.cos(2 * np.pi * df['YearBuilt'] / 100)
 
     # 标准化数值特征
-    num_features = num_features.drop(['YearSin', 'YearCos'], errors='ignore')
+    # num_features = num_features.drop(['YearSin', 'YearCos'], errors='ignore')
     scaler = StandardScaler()
     train_features[num_features] = scaler.fit_transform(train_features[num_features])
     test_features[num_features] = scaler.transform(test_features[num_features])
